@@ -1,0 +1,40 @@
+% ======================================================================
+% sections/col2.tex — Column 2 content
+% ======================================================================
+
+\begin{block}{Methods}
+\justifying
+Make it process-like: system, parameters, pipeline, evaluation metrics.
+
+\begin{tightitemize}
+  \item Setup: ...
+  \item Procedure: ...
+  \item Metrics: ...
+\end{tightitemize}
+\end{block}
+
+\begin{block}{Results (Figure)}
+\centering
+% Put your figures in /figures and change the filename below.
+% This compiles even if the file doesn't exist (fallback box).
+\IfFileExists{figures/fig1.png}{%
+  \includegraphics[width=0.93\linewidth]{figures/fig1.png}
+}{%
+  \begin{tikzpicture}
+    \draw[gray] (0,0) rectangle (10,5.6);
+    \node[gray] at (5,2.8) {\large figure placeholder};
+  \end{tikzpicture}
+}
+
+\vspace{0.5em}
+\justifying
+2–3 lines caption: what does the figure show, the main trend, and why it matters.
+\end{block}
+
+\begin{block}{Key Equation (Optional)}
+\justifying
+Keep equations readable and minimal:
+\[
+\Delta G = \Delta H - T\Delta S
+\]
+\end{block}

@@ -1,0 +1,6 @@
+这个项目是使用claude的插件原名为.claude-plugin
+### Manually
+
+#### Claude Code
+
+Add the contents of this repo to a `/.claude` folder in the root of your Obsidian vault (or whichever folder you're using with Claude Code). See more in the [official Claude Skills documentation](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview).

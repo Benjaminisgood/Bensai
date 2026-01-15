@@ -1,0 +1,187 @@
+% ======================================================================
+% main.tex — Ultra-generic BeamerPoster template (XeLaTeX)
+% ======================================================================
+% ✅ Compiles out-of-the-box (even if you haven't added any images yet)
+% ✅ Highly reusable: content split into /sections/*.tex
+% ✅ Robust layout: 3 columns, fixed content height, compact lists
+% ✅ Clean header band (TikZ overlay) with optional logo(s)
+%
+% Compile (recommended):
+%   xelatex main.tex
+%   xelatex main.tex   % run twice if you add references later
+%
+% If using VS Code + LaTeX Workshop:
+%   - Set engine to XeLaTeX for this file
+% ======================================================================
+
+\documentclass[final]{beamer}
+
+% ----------------------------------------------------------------------
+% 1) Poster page size (custom)
+%    Tip: common "36×48 inch" ≈ 91.4×121.9 cm (portrait),
+%         landscape would be ≈ 121.9×91.4 cm.
+% ----------------------------------------------------------------------
+\usepackage[orientation=landscape,size=custom,width=122,height=91.4,scale=1.25]{beamerposter}
+
+% ----------------------------------------------------------------------
+% 2) Fonts (XeLaTeX)
+%    - Change these to your preferred fonts (must exist on your system)
+% ----------------------------------------------------------------------
+\usepackage{fontspec}
+\setmainfont{Times New Roman} % body font
+% \setsansfont{Arial}         % optional: sans font
+% \setmonofont{Menlo}         % optional: monospace
+
+% ----------------------------------------------------------------------
+% 3) Basic packages
+% ----------------------------------------------------------------------
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{ragged2e}  % \justifying
+\usepackage{microtype} % nicer spacing + fewer overfull boxes
+\usepackage{tikz}      % header band overlay
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+% ----------------------------------------------------------------------
+% 4) Theme colors (keep simple: 1 main color + optional accent)
+% ----------------------------------------------------------------------
+\definecolor{MainColor}{RGB}{170,0,0}   % change to your theme color
+\definecolor{Accent}{RGB}{30,90,200}    % optional accent color
+
+\setbeamercolor{normal text}{fg=black,bg=white}
+\setbeamercolor{block title}{fg=white,bg=MainColor}
+\setbeamercolor{block body}{fg=black,bg=white}
+
+% Poster readability:
+\setbeamerfont{block title}{size=\Large,series=\bfseries}
+\setbeamerfont{block body}{size=\large}
+
+% ----------------------------------------------------------------------
+% 5) Compact list environment (poster needs dense layout)
+% ----------------------------------------------------------------------
+\newenvironment{tightitemize}{
+  \begin{itemize}
+    \setlength\itemsep{0.35em}
+    \setlength\topsep{0.2em}
+    \setlength\parskip{0em}
+}{\end{itemize}}
+
+% ----------------------------------------------------------------------
+% 6) Global spacing + column gap
+%    If your third column "drops" to next line:
+%      (1) reduce \columnsep, (2) reduce column widths (e.g. 0.31),
+%      (3) reduce beamerposter scale.
+% ----------------------------------------------------------------------
+\setlength{\columnsep}{0.018\textwidth}
+
+% ----------------------------------------------------------------------
+% 7) Content height control
+%    Fixed-height minipage prevents columns ending at very different heights
+%    and helps avoid bottom overflow surprises.
+% ----------------------------------------------------------------------
+\newlength{\ContentHeight}
+\setlength{\ContentHeight}{0.74\textheight} % tune if you want more/less space
+
+% ----------------------------------------------------------------------
+% 8) Metadata (edit these three)
+% ----------------------------------------------------------------------
+\title{Your Poster Title Here}
+\author{\textbf{Your Name} \\[0.35em] \textbf{Email:} you@example.com}
+\institute{Your University / Lab / Department}
+
+% Optional footer text (e.g., funding, DOI, "Based on ...")
+\newcommand{\footnoteLine}{Funding: XXX \quad | \quad Code: \href{https://github.com/}{github.com/...}}
+
+% ----------------------------------------------------------------------
+% 9) Optional logo helper:
+%    - Put your logo at: figures/logo.png (or change the path)
+%    - This template compiles even if the file doesn't exist.
+% ----------------------------------------------------------------------
+\newcommand{\MaybeLogo}[2]{% #1=width, #2=filepath
+  \IfFileExists{#2}{\includegraphics[width=#1]{#2}}{%
+    % Fallback placeholder box if file is missing
+    \begin{tikzpicture}
+      \draw[gray] (0,0) rectangle (3,1.6);
+      \node[gray] at (1.5,0.8) {\scriptsize logo};
+    \end{tikzpicture}%
+  }%
+}
+
+\begin{document}
+\begin{frame}[t]
+
+% ======================================================================
+% HEADER BAND (full width)
+% ======================================================================
+% Tune these two numbers if the header overlaps content:
+%  - vspace before header: moves header up/down relative to the page
+%  - vspace after header : moves body down
+\vspace{-0.95cm}
+
+\begin{tikzpicture}[remember picture,overlay]
+  \node[anchor=north west] at ([xshift=0.8cm,yshift=-0.35cm]current page.north west) {%
+    \begin{minipage}{0.985\paperwidth}
+      {\color{MainColor}\rule{\linewidth}{1.6pt}}
+
+      % Left logo
+      \begin{minipage}[c]{0.14\paperwidth}
+        \centering
+        \MaybeLogo{0.95\linewidth}{figures/logo.png}
+      \end{minipage}
+      \hfill
+
+      % Title
+      \begin{minipage}[c]{0.66\paperwidth}
+        {\color{MainColor}\fontsize{69}{82}\selectfont\bfseries \inserttitle}
+        \\[0.25em]
+        {\fontsize{34}{40}\selectfont \insertinstitute}
+      \end{minipage}
+      \hfill
+
+      % Presenter / contact
+      \begin{minipage}[c]{0.16\paperwidth}
+        {\fontsize{38}{46}\selectfont \textbf{Presenter:}}\\[0.2em]
+        {\fontsize{34}{40}\selectfont \insertauthor}
+      \end{minipage}
+
+      \\[0.35em]
+      {\fontsize{28}{34}\selectfont \footnoteLine}
+
+      {\color{MainColor}\rule{\linewidth}{1.6pt}}
+    \end{minipage}
+  };
+\end{tikzpicture}
+
+\vspace{2.8cm}
+
+% ======================================================================
+% BODY (3 columns)
+% ======================================================================
+\begin{columns}[t,totalwidth=\textwidth]
+
+% -------------------- Column 1 --------------------
+\begin{column}{0.32\textwidth}
+\begin{minipage}[t][\ContentHeight][t]{\linewidth}
+\input{sections/col1.tex}
+\end{minipage}
+\end{column}
+
+% -------------------- Column 2 --------------------
+\begin{column}{0.32\textwidth}
+\begin{minipage}[t][\ContentHeight][t]{\linewidth}
+\input{sections/col2.tex}
+\end{minipage}
+\end{column}
+
+% -------------------- Column 3 --------------------
+\begin{column}{0.32\textwidth}
+\begin{minipage}[t][\ContentHeight][t]{\linewidth}
+\input{sections/col3.tex}
+\end{minipage}
+\end{column}
+
+\end{columns}
+
+\end{frame}
+\end{document}

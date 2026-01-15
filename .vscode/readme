@@ -1,0 +1,8 @@
+这个项目是vscode可复用的常用的bash指令
+前一级应该是根目录，并且包含.env文件
+可选：OSS_SYNC_EXCLUDES=".git,.env" OSS_SYNC_DELETE=true .vscode/bensync.sh
+推荐插件：
+- Marp for VS Code
+- Microsoft Edge Tools for VS Code
+- Codex – OpenAI’s coding agent
+- Foam
